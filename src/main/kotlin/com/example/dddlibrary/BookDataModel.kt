@@ -5,8 +5,8 @@ import jakarta.persistence.Id
 import jakarta.persistence.*
 import javax.annotation.processing.Generated
 
-@Entity(name = "bookDb")
-@Table(name = "bookDb")
+@Entity(name = "bookDbb")
+@Table(name = "bookDbb")
 data class BookDataModel (
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,5 +15,10 @@ data class BookDataModel (
     val id:Long? = null,
 
     @Column(name = "name")
-    val name: String? = null
+    val name: String? = null,
+
+    @Column(name= "authorName")
+    val authorName: String? = null
+
+
 )

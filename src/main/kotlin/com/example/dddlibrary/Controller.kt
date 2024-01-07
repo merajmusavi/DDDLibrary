@@ -1,6 +1,7 @@
 package com.example.dddlibrary
 
 import domain.aggreage.book.Book
+import domain.aggreage.book.valueobject.Author
 import domain.aggreage.book.valueobject.Name
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.PostMapping
@@ -12,16 +13,15 @@ import org.springframework.web.bind.annotation.RestController
 class Controller(val serviceLayer: com.example.dddlibrary.Service) {
 
     @PostMapping()
-    fun saveBook(@RequestBody book : BookDataModel):Any{
+    fun saveBook(@RequestBody book: BookDataModel): Any {
 
 
         try {
-            var result = Book.makeNew(book.name.toString())
-            if(result.isFailure){
+            var result = Book.makeNew(book.name.toString(), book.authorName.toString())
+            if (result.isFailure) {
                 throw result.exceptionOrNull()!!
             }
 
-            val bookNameResult = result.getOrNull()!!.bookName.value
 
 
             serviceLayer.insertBook(book)
@@ -30,12 +30,11 @@ class Controller(val serviceLayer: com.example.dddlibrary.Service) {
             return "inserted successfully"
 
 
-        }catch (e: Name.InvalidNameOfBookException){
+        } catch (e: Name.InvalidNameOfBookException) {
             return "invalid name"
+        } catch (e: Author.InvalidAuthorName) {
+            return "invalid Author name"
         }
-
-
-
 
 
     }
