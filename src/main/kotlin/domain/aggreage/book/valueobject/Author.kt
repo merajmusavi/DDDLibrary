@@ -5,7 +5,7 @@ import javax.print.DocFlavor.STRING
 data class Author private constructor(val value:String){
     companion object{
         private fun isValidAuthorName(name:String):Boolean{
-             val authorNameRegex = """^[a-zA-Z]{2,20}$""".toRegex()
+            val authorNameRegex = """^[a-zA-Z0-9\s]{2,50}$""".toRegex()
             return authorNameRegex.matches(name)
 
 
