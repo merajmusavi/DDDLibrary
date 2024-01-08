@@ -7,4 +7,7 @@ import org.springframework.transaction.annotation.Transactional
  interface DbInt : JpaRepository<BookDataModel,Long> {
 
 
+
+  @Query("SELECT b FROM bookDbb b WHERE name= ?1")
+  fun findByName(name:String) : BookDataModel?;
  }

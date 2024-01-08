@@ -15,10 +15,15 @@ data class BookDataModel (
     val id:Long? = null,
 
     @Column(name = "name")
-    val name: String? = null,
+    var name: String? = null,
 
     @Column(name= "authorName")
-    val authorName: String? = null
+    var authorName: String? = null
 
 
-)
+){
+    constructor(name: String, author: String) : this(){
+        this.name = name
+        this.authorName = author
+    }
+}

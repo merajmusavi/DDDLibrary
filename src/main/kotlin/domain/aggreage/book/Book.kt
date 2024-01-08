@@ -1,8 +1,9 @@
 package domain.aggreage.book
 
+import com.example.dddlibrary.BookDataModel
 import domain.aggreage.book.valueobject.Author
 import domain.aggreage.book.valueobject.Name
-import java.lang.IllegalArgumentException
+
 
 class Book private constructor(){
 
@@ -16,7 +17,8 @@ class Book private constructor(){
     }
 
     companion object{
-        fun makeNew(name:String,authorName:String) : Result<Book>{
+
+        fun makeNew(name:String,authorName:String) : Result<Book>?{
 
             val resultName = Name.makeNew(name)
 
@@ -32,5 +34,20 @@ class Book private constructor(){
             }
 
         }
+
+        fun fromDataModel(dataModel: BookDataModel) : Book{
+            val bookNameResult = Name.makeNew(dataModel.name ?: throw Name.InvalidNameOfBookException("invalid name exception"))
+            val authorNameResult = Author.makeNew(dataModel.authorName ?: throw Author.InvalidAuthorName("invalid author name"))
+
+
+            if (bookNameResult.isSuccess && authorNameResult.isSuccess){
+                return Book(bookNameResult.getOrNull()!!,authorNameResult.getOrNull()!!)
+
+            }else{
+                throw java.lang.IllegalArgumentException("unrecognizable error")
+            }
+        }
+        class NotFoundException(message:String) : IllegalArgumentException(message)
+
     }
 }
